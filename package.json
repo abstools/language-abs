@@ -1,0 +1,14 @@
+{
+  "name": "language-abs",
+  "version": "0.0.0",
+  "description": "Atom support for the ABS language (http://abs-models.org)",
+  "keywords": [
+    "language",
+    "grammar"
+  ],
+  "repository": "https://github.com/abstools/abstools",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  }
+}

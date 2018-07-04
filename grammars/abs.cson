@@ -1,0 +1,180 @@
+# If this is your first time writing a language grammar, check out:
+#   - https://flight-manual.atom.io/hacking-atom/sections/creating-a-grammar/
+
+scopeName: 'source.abs'
+name: 'Abs'
+fileTypes: [ 'abs' ]
+patterns: [
+    {
+        include: '#comments'
+    }
+    {
+        include: '#numbers'
+    }
+    {
+        include: '#strings'
+    }
+    {
+        include: '#operators'
+    }
+    {
+        include: '#constants'
+    }
+    {
+        include: '#keywords'
+    }
+    {
+        include: '#functions'
+    }
+    {
+        include: '#variables'
+    }
+    {
+        include: '#types'
+    }
+]
+
+repository:
+    comments:
+        patterns: [
+            {
+                begin: '//'
+                end: '\\n'
+                name: 'comment.line.double-slash.abs'
+            }
+            {
+                begin: '/\\*'
+                beginCaptures:
+                    '0':
+                        name: 'punctuation.definition.comment.begin.abs'
+                end: '\\*/'
+                endCaptures:
+                    '0':
+                        name: 'punctuation.definition.comment.end.abs'
+                name: 'comment.block.abs'
+            }
+        ]
+    numbers:
+        patterns: [
+            {
+                match: '\\b[1-9][0-9]*\\b'
+                name: 'constant.numeric.integer.abs'
+            }
+            {
+                match: '\\b[0-9]?\\.[0-9]+((E|e)(\\+|-)?[0-9]+)?\\b'
+                name: 'constant.numeric.float.abs'
+            }
+        ]
+    strings:
+        patterns: [
+            {
+                begin: '"'
+                beginCaptures:
+                    '0':
+                        name: 'punctuation.definition.string.begin.abs'
+                end: '"(?!")'
+                endCaptures:
+                    '0':
+                        name: 'punctuation.definition.string.end.abs'
+                name: 'string.quoted.double.abs'
+                patterns: [
+                    {
+                        match: '\\\\.'
+                        name: 'constant.character.escape.abs'
+                    }
+                ]
+            }
+        ]
+    operators:
+        patterns: [
+            {
+                match: '<\\=|>\\=|\\=\\=|<|>|\\!\\='
+                name: 'keyword.operator.comparison.abs'
+            }
+            {
+                match: '\\='
+                name: 'keyword.operator.assignment.abs'
+            }
+            {
+                match: '\\+|\\-|\\*|/|%'
+                name: 'keyword.operator.arithmetic.abs'
+            }
+            {
+                match: '&&|\\|\\||!|\\->|<\\->'
+                name: 'keyword.operator.logical.abs'
+            }
+        ]
+    constants:
+        patterns: [
+            {
+                match: '\\b(True|False|null|this|Nil|Cons)\\b'
+                name: 'constant.language.abs'
+            }
+        ]
+    keywords:
+        patterns: [
+            {
+                match: '\\b(import|from)\\b'
+                name: 'keyword.control.import.abs'
+            }
+            {
+                match: '\\b(if|then|else)\\b'
+                name: 'keyword.control.conditional.abs'
+            }
+            {
+                match: '\\b(while|foreach)\\b'
+                name: 'keyword.control.repeat.abs'
+            }
+            {
+                match: '\\b(try|catch|finally)\\b'
+                name: 'keyword.control.exception.abs'
+            }
+            {
+                match: '\\b(return|throw|die|await|suspend)\\b'
+                name: 'keyword.control.statement.abs'
+            }
+            {
+                match: '\\b(module|export|data|type|def|interface|class|exception|case|=>|new|local|extends|implements|recover|delta|adds|modifies|removes|uses|hasField|hasMethod|hasInterface|productline|features|core|after|when|root|extension|group|opt|oneof|allof|ifin|ifout|exclude|require|product|let|in|assert|get|skip|original|movecogto|duration)\\b'
+                name: 'keyword.other.abs'
+            }
+        ]
+    functions:
+        patterns: [
+            {
+                match: '\\b([a-z]\\w+)\\s*(\\(|\\[)'
+                captures:
+                    '1':
+                        name: 'entity.name.function.abs'
+                name: 'meta.function.abs'
+            }
+            {
+                match: '\\b([A-Z]\\w+)\\s*\\('
+                captures:
+                    '1':
+                        name: 'entity.name.function.constructor.abs'
+                name: 'meta.constructor.abs'
+            }
+        ]
+    variables:
+        patterns: [
+            {
+                match: '\\b(this)\\.([a-z]\\w*)\\b'
+                captures:
+                    '2':
+                        name: 'variable.field.abs'
+                name: 'meta.field.abs'
+            }
+            {
+                match: '\\b[a-z]\\w*\\b'
+                name: 'variable.abs'
+            }
+        ]
+    types:
+        patterns: [
+            {
+                match: '\\b[A-Z]\\w*\\b'
+                # we want "type" but atom defines "class" in
+                # https://github.com/atom/atom/blob/master/static/variables/syntax-variables.less
+                name: 'class.abs'
+            }
+        ]
